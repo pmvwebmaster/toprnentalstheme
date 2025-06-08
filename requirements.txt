@@ -2,3 +2,5 @@ fastapi
 uvicorn
 gunicorn
 httpx
+transformers
+torch
