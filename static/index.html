@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise de Sentimento com IA - Ganhe Insights Agora!</title>
+    <!-- Google AdSense (substitua pelo seu código real) -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f7f7f7; margin: 0; padding: 0; }
+        .container { max-width: 500px; margin: 40px auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px #0001; padding: 32px; }
+        h1 { color: #2d3a4b; }
+        textarea { width: 100%; min-height: 80px; margin-bottom: 16px; padding: 8px; border-radius: 4px; border: 1px solid #ccc; font-size: 1em; }
+        button { background: #2d3a4b; color: #fff; border: none; padding: 12px 24px; border-radius: 4px; font-size: 1em; cursor: pointer; }
+        button:disabled { background: #aaa; }
+        .result { margin-top: 24px; font-size: 1.1em; }
+        .ads { margin: 24px 0; text-align: center; }
+        .cta { background: #eaf6ff; border-left: 4px solid #2196f3; padding: 12px; margin-top: 32px; }
+        .premium { background: #fffbe6; border-left: 4px solid #ffc107; padding: 12px; margin-top: 24px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Descubra o Sentimento do Seu Texto com Inteligência Artificial!</h1>
+        <p>Use nossa IA gratuita para analisar rapidamente o sentimento de qualquer texto. Ideal para empresas, estudantes, criadores de conteúdo e curiosos!</p>
+        <form id="sentimentForm">
+            <textarea id="userText" placeholder="Cole seu texto aqui..." required></textarea>
+            <button type="submit">Analisar Sentimento</button>
+        </form>
+        <div class="result" id="result"></div>
+        <div class="ads">
+            <!-- Espaço para anúncios Google AdSense -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-xxxxxxxxxxxxxxxx"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+        <div class="cta">
+            <strong>Ganhe vantagem competitiva!</strong> Use nossa API de IA para automatizar análises de sentimento em seus sistemas, sites ou aplicativos. <br>
+            <a href="#premium">Conheça nossos planos premium</a> para uso ilimitado e integrações exclusivas.
+        </div>
+        <div class="premium" id="premium">
+            <h2>Planos Premium</h2>
+            <ul>
+                <li>Mais requisições por minuto</li>
+                <li>Suporte prioritário</li>
+                <li>Integração via API</li>
+                <li>Sem anúncios</li>
+            </ul>
+            <p><strong>Entre em contato e comece a lucrar com IA hoje mesmo!</strong></p>
+            <a href="mailto:seuemail@dominio.com?subject=Quero%20o%20Plano%20Premium%20de%20IA" style="color:#2196f3;">Solicitar proposta</a>
+        </div>
+    </div>
+    <script>
+        document.getElementById('sentimentForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const text = document.getElementById('userText').value;
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = 'Analisando...';
+            try {
+                const response = await fetch('/sentiment/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt: text })
+                });
+                const data = await response.json();
+                if (data.result && Array.isArray(data.result) && data.result[0]) {
+                    resultDiv.innerHTML = `<b>Sentimento:</b> ${data.result[0].label} <br><b>Confiança:</b> ${(data.result[0].score*100).toFixed(2)}%`;
+                } else if (data.error) {
+                    resultDiv.textContent = 'Erro: ' + data.error;
+                } else {
+                    resultDiv.textContent = 'Não foi possível analisar o texto.';
+                }
+            } catch (err) {
+                resultDiv.textContent = 'Erro ao conectar ao servidor.';
+            }
+        });
+    </script>
+</body>
+</html>

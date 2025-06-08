@@ -3,6 +3,7 @@ from pydantic import BaseModel
 from typing import Optional
 import os
 import httpx
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
 
@@ -42,3 +43,5 @@ def sentiment_via_huggingface(request: ChatRequest):
         return {"result": response.json()}
     else:
         return {"error": "Erro ao consultar HuggingFace API", "details": response.text}
+
+app.mount("/", StaticFiles(directory="static", html=True), name="static")
