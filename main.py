@@ -16,10 +16,6 @@ class Item(BaseModel):
 class ChatRequest(BaseModel):
     prompt: str
 
-@app.get("/")
-def read_root():
-    return {"message": "Olá, mundo!"}
-
 app.mount("/", StaticFiles(directory="static", html=True), name="static")
 
 api = FastAPI()
