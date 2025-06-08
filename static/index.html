@@ -65,7 +65,7 @@
             const resultDiv = document.getElementById('result');
             resultDiv.textContent = 'Analisando...';
             try {
-                const response = await fetch('/sentiment/', {
+                const response = await fetch('/api/sentiment/', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ prompt: text })
