@@ -46,4 +46,5 @@ def sentiment_via_huggingface(request: ChatRequest):
     else:
         return {"error": "Erro ao consultar HuggingFace API", "details": response.text, "status": response.status_code}
 
+# Monta a subaplicação da API em /api
 app.mount("/api", api)
