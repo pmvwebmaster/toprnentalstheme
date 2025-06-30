@@ -5,7 +5,7 @@ name: PHP Syntax Check (DEV)
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ dev ]
   pull_request:
     branches: [ main, master ]
 
