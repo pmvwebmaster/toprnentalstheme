@@ -1,0 +1,32 @@
+# Workflow para ambiente TST
+# Este workflow executa checagem de sintaxe PHP para o ambiente de teste
+
+name: PHP Syntax Check (TST)
+
+on:
+  push:
+    branches: [ tst ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  php-syntax-check:
+    runs-on: ubuntu-latest
+    environment: tst
+    env:
+      ENVIRONMENT: tst
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+      - name: Find PHP files
+        run: |
+          find . -name '*.php' > php_files.txt
+      - name: Syntax check
+        run: |
+          while read file; do
+            php -l "$file"
+          done < php_files.txt
