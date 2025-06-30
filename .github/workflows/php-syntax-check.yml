@@ -12,6 +12,7 @@ on:
 jobs:
   php-syntax-check:
     runs-on: ubuntu-latest
+    environment: dev
     env:
       ENVIRONMENT: dev
     steps:
