@@ -1,0 +1,31 @@
+# Workflow para ambiente DEV
+# Este workflow executa checagem de sintaxe PHP para o ambiente de desenvolvimento
+
+name: PHP Syntax Check (DEV)
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  php-syntax-check:
+    runs-on: ubuntu-latest
+    env:
+      ENVIRONMENT: dev
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+      - name: Find PHP files
+        run: |
+          find . -name '*.php' > php_files.txt
+      - name: Syntax check
+        run: |
+          while read file; do
+            php -l "$file"
+          done < php_files.txt
