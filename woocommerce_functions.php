@@ -24,6 +24,7 @@ function rental_enqueue_scripts() {
         null,
         true // load in footer
     );
+    
 
     // Inject data into JS
     wp_localize_script('rental-script', 'rentalAjax', array(

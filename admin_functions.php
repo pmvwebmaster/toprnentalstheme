@@ -185,6 +185,7 @@ function unavailable_days_admin_menu() {
         );
     }
 }
+
 add_action('admin_menu', 'unavailable_days_admin_menu');
 
 // Admin page for unavailable days

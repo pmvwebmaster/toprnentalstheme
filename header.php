@@ -1,4 +1,3 @@
-
 <?php
     $url_minha_conta = get_permalink( get_option('woocommerce_myaccount_page_id') );
     $usuario_logado = is_user_logged_in();
@@ -11,31 +10,56 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
     <link rel="shortcut icon" href="<?php echo get_template_directory_uri(); ?>/assets/images/logo-sugesto-02.jpg-128x123.png" type="image/x-icon">
-    <meta name="description" content="<?php bloginfo('description'); ?>">
-    <meta name="keywords" content="scooter rentals, mobility scooters, Orlando, strollers, rental, top rentas, Florida, travel, vacation, accessibility">
-    <meta name="author" content="Top Rentas Scooters">
-    <title><?php wp_title('|', true, 'right'); bloginfo('name'); ?></title>
-    <link rel="canonical" href="<?php echo esc_url( ( is_singular() ? get_permalink() : home_url( add_query_arg( null, null ) ) ) ); ?>" />
-    <?php if ( is_singular() ) : ?>
-        <meta property="og:title" content="<?php the_title_attribute(); ?>" />
-        <meta property="og:description" content="<?php echo esc_attr( get_the_excerpt() ); ?>" />
-        <meta property="og:url" content="<?php the_permalink(); ?>" />
-        <meta property="og:type" content="article" />
-        <?php if ( has_post_thumbnail() ) : ?>
-            <meta property="og:image" content="<?php echo get_the_post_thumbnail_url( null, 'large' ); ?>" />
-        <?php endif; ?>
+
+    <?php
+    // SEO multilíngue dinâmico
+    function get_seo_text($en, $pt) {
+        $lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+        if ($lang === 'pt') return $pt;
+        return $en;
+    }
+    $site_name = get_bloginfo('name');
+    $site_desc = get_seo_text(
+        'Mobility scooter and stroller rental in Orlando, Florida. Free delivery and pickup. Book online for your vacation!',
+        'Aluguel de scooter e carrinho de bebê em Orlando, Flórida. Entrega e retirada grátis. Reserve online para suas férias!'
+    );
+    $keywords = get_seo_text(
+        'scooter rentals, mobility scooters, Orlando, strollers, rental, top rentals, Florida, travel, vacation, accessibility',
+        'aluguel de scooter, carrinho de bebê, Orlando, aluguel, top rentals, Flórida, viagem, férias, acessibilidade'
+    );
+    $title = '';
+    $desc = '';
+    if (is_singular()) {
+        $title = get_the_title() . ' | ' . $site_name;
+        $desc = get_seo_text(
+            get_the_excerpt(),
+            has_excerpt() ? get_the_excerpt() : $site_desc
+        );
+    } else {
+        $title = $site_name;
+        $desc = $site_desc;
+    }
+    ?>
+    <meta name="description" content="<?php echo esc_attr($desc); ?>">
+    <meta name="keywords" content="<?php echo esc_attr($keywords); ?>">
+    <meta name="author" content="Top Rentals Scooters">
+    <title><?php echo esc_html($title); ?></title>
+    <link rel="canonical" href="<?php echo esc_url( is_singular() ? get_permalink() : home_url( add_query_arg( null, null ) ) ); ?>" />
+    <meta property="og:title" content="<?php echo esc_attr($title); ?>" />
+    <meta property="og:description" content="<?php echo esc_attr($desc); ?>" />
+    <meta property="og:url" content="<?php echo is_singular() ? get_permalink() : home_url(); ?>" />
+    <meta property="og:type" content="<?php echo is_singular() ? 'article' : 'website'; ?>" />
+    <?php if ( is_singular() && has_post_thumbnail() ) : ?>
+        <meta property="og:image" content="<?php echo get_the_post_thumbnail_url( null, 'large' ); ?>" />
     <?php else : ?>
-        <meta property="og:title" content="<?php bloginfo('name'); ?>" />
-        <meta property="og:description" content="<?php bloginfo('description'); ?>" />
-        <meta property="og:url" content="<?php echo home_url(); ?>" />
-        <meta property="og:type" content="website" />
         <meta property="og:image" content="<?php echo get_template_directory_uri(); ?>/assets/images/logo-02-transp.png-455x236.png" />
     <?php endif; ?>
-    <meta property="og:site_name" content="<?php bloginfo('name'); ?>" />
+    <meta property="og:site_name" content="<?php echo esc_attr($site_name); ?>" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="<?php wp_title('|', true, 'right'); bloginfo('name'); ?>" />
-    <meta name="twitter:description" content="<?php bloginfo('description'); ?>" />
+    <meta name="twitter:title" content="<?php echo esc_attr($title); ?>" />
+    <meta name="twitter:description" content="<?php echo esc_attr($desc); ?>" />
     <meta name="twitter:image" content="<?php echo get_template_directory_uri(); ?>/assets/images/logo-02-transp.png-455x236.png" />
+    <meta name="google-site-verification" content="google62184e24a15f16c4.html" />
 
     <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/assets/simple-line-icons/simple-line-icons.css">
     <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/assets/bootstrap/css/bootstrap.min.css">
@@ -49,7 +73,6 @@
     <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/assets/dropdown/css/style.css">
     <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/assets/socicon/css/styles.css">
     <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/assets/theme/css/style.css">
-
     <link rel="preload" href="https://fonts.googleapis.com/css?family=Inter+Tight:100,200,300,400,500,600,700,800,900,100i,200i,300i,400i,500i,600i,700i,800i,900i&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter+Tight:100,200,300,400,500,600,700,800,900,100i,200i,300i,400i,500i,600i,700i,800i,900i&display=swap"></noscript>
     <link rel="preload" as="style" href="<?php echo get_template_directory_uri(); ?>/assets/mobirise/css/mbr-additional.css?v=ResYi8">
